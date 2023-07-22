@@ -6,8 +6,10 @@
 
 # useful for handling different item types with a single interface
 from itemadapter import ItemAdapter
+from scrapy.exceptions import DropItem
 
-
-class KinokuniyaPipeline:
+class CheckItemPipeline:
     def process_item(self, item, spider):
+        if not item.get('isbn'):
+            raise DropItem('Missing isbn')
         return item
